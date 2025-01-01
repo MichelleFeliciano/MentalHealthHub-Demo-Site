@@ -1,0 +1,196 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="private.master.cs" Inherits="MentalHealthHub._private" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Mental Health Resource Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8fdf9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #ffffff;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #4CAF50;
+            display: inline-block;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            background: #ffffff; /* Ensure h1 text is legible */
+        }
+
+        header h1::after {
+            content: "";
+            position: absolute;
+            width: 100px; /* Adjust size as needed */
+            height: 100px; /* Adjust size as needed */
+            bottom: -5px; /* Adjust position as needed */
+            left: -15px; /* Adjust position as needed */
+            background-image: url('https://images.template.net/91069/free-wedding-vine-clipart-zcdtg.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: -1;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4CAF50;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #388E3C;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .content-container {
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .accessibility-toolbar {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #f8fdf9;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .high-contrast {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .login-button {
+            margin-left: 15px;
+            font-size: 0.9rem;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            position: absolute;
+            left: 10px; /* Adjust as needed */
+            top: 10px; /* Adjust as needed */
+        }
+
+        .login-button-container {
+            display: flex; /* Use flexbox for alignment */
+            justify-content: flex-end; /* Align content to the right */
+            margin-right: 20px; /* Optional: Add spacing from the edge */
+        }
+
+        .login-button:hover {
+            background-color: #388E3C;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div id="stuff" runat="server">
+        <!-- Header Section -->
+        <header>
+            <h1>Mental Health Resource Hub</h1>
+            <nav>
+                <asp:HyperLink ID="hlHome" runat="server" NavigateUrl="~/Home.aspx">Home</asp:HyperLink>
+                <asp:HyperLink ID="hlResources" runat="server" NavigateUrl="~/Resources.aspx">Resources</asp:HyperLink>
+                <asp:HyperLink ID="hlTools" runat="server" NavigateUrl="~/Tools.aspx">Tools</asp:HyperLink>
+                <asp:HyperLink ID="hlContact" runat="server" NavigateUrl="~/Contact.aspx">Contact</asp:HyperLink>
+                <asp:HyperLink ID="hlBlog" runat="server" NavigateUrl="~/Blog.aspx">Blog</asp:HyperLink>
+                <asp:HyperLink ID="hlForum" runat="server" NavigateUrl="~/Forum.aspx">Forum</asp:HyperLink>
+                <asp:HyperLink ID="hlAbout" runat="server" NavigateUrl="~/About.aspx">About</asp:HyperLink>
+                
+            </nav>
+            <asp:HyperLink ID="hlLogin" runat="server" NavigateUrl="~/LogIn.aspx">
+                <button class="login-button">Log In</button>
+            </asp:HyperLink>
+            <div class="accessibility-toolbar">
+                <button onclick="increaseTextSize()">A+</button>
+                <button onclick="decreaseTextSize()">A-</button>
+                <button onclick="toggleContrast()">Toggle Contrast</button>
+                <select id="languageSelector" onchange="setLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+            </div>
+            <script>
+                function increaseTextSize() {
+                    document.body.style.fontSize = 'larger';
+                }
+                function decreaseTextSize() {
+                    document.body.style.fontSize = 'smaller';
+                }
+                function toggleContrast() {
+                    // Toggle high contrast on specific sections
+                    const elements = document.querySelectorAll('.content-container, nav a, footer p');
+                    elements.forEach(element => {
+                        element.classList.toggle('high-contrast');
+                    });
+                }
+                function setLanguage(language) {
+                    window.location.href = `?lang=${language}`;
+                }
+            </script>
+        </header>
+
+        <!-- Main Content Section -->
+        <form id="form1" runat="server">
+            <!-- Content Placeholder -->
+            <div class="content-container">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </form>
+
+        <!-- Footer Section -->
+        <footer>
+            <p>&copy; 2024 Mental Health Resource Hub. All rights reserved.</p>
+            <p>Contact us: support@mentalhealthhub.com</p>
+        </footer>
+    </div>
+</body>
+</html>
